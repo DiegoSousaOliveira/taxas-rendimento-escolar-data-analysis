@@ -35,9 +35,11 @@ O indicador apresenta o percentual de alunos em cada uma dessas categorias. Os d
 ---
 ## Passos para rodar a aplicação em seu servidor local:
  - 1° Var para pasta raiz do projeto
+   
     ![pasta_raiz_do_projeto](https://github.com/user-attachments/assets/c440e3a6-5c1b-4488-b828-fbaddfd61646)
 
  - 2° Abra o terminal no vs code ou em um terminal de sua preferencia
+   
     ![terminal](https://github.com/user-attachments/assets/9bd379b6-67ae-4b3b-9352-c81b1aa35919)
 
  - 3º Inicei um ambiente virtual em seu terminal
