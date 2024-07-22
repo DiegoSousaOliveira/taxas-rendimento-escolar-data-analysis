@@ -1,36 +1,43 @@
 import streamlit as st
-import plotly.graph_objects as go
-import main
+from chart import ChartTable
+from main import Table
 
-labels = ['Taxa de Abandono','Taxa de Reprovação','Taxa de Aprovação']
-values = [main.mean_abandonment, main.mean_failure, main.mean_approval]
+def generate_chart(name_table = '2022'):
+    table = Table(name_file=name_table)
+    chartTable = ChartTable(
+        values=table.values_of_the_mean(), 
+        labels=table.labels_of_the_mean())
+    st.session_state['chart_pie'] = chartTable.generate_pie_chart()
 
-
-fig = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.7)])
-
-
-fig.update_layout(
-    title_text='Taxas de Rendimento Escolar',
-    annotations=[dict(text='Taxas', x=0.5, y=0.5, font_size=20, showarrow=False)],
-    showlegend=True
-)
+if 'chart_pie' not in st.session_state:
+    generate_chart()
 
 st.set_page_config(layout='wide')
 
-col1, col2 = st.columns(2, vertical_alignment='bottom')
+with open('styles.css') as arquivo:
+    st.markdown('<style>' + arquivo.read() + '</style>', unsafe_allow_html=True)
+
+col1, col2 = st.columns(2, gap='medium')
 
 with col1:
-    with st.container(height=300, border=False):
-        st.write(f"""
+    with st.container(border=False):
+        st.write(f"""<h4>
             Unidade Geográfica: Brasil<br>
                  Localização: Total<br>
                  Dependência Administrativa: Total<br>
-                 ano: 2022
+                 ano: 2022</h4>
             """, unsafe_allow_html=True)
+        
+    with st.container(height=200,border=False):
+        st.button('2021', on_click=lambda : generate_chart("2021"))
+        st.button('2020', on_click=lambda : generate_chart("2020"))
+        st.button('2019', on_click=lambda : generate_chart("2019"))
+        st.button('2018', on_click=lambda : generate_chart("2018"))
+        st.button('2017', on_click=lambda : generate_chart("2017"))
 
     with st.container(height=200):
         st.write("""
-            # Indicador Educacional da Educação Básica - Taxas de Rendimento Escolar
+            ## Indicador Educacional da Educação Básica - Taxas de Rendimento Escolar
             O cálculo das taxas de rendimento (aprovação, reprovação e abandono) tem 
             como referência as informações de rendimento e movimento dos alunos 
             coletadas na segunda etapa do Censo Escolar da Educação Básica, denominada
@@ -51,4 +58,4 @@ with col1:
 
 
 with col2:
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(st.session_state['chart_pie'], use_container_width=True)
