@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.stButton>button {
+    background-color: #14C6CC;
+    color: #F2F4F7;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.stButton>button:hover {
+    background-color: #45a049;
+}
